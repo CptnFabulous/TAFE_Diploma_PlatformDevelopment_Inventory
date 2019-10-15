@@ -167,11 +167,12 @@ namespace Linear
                 Display();
                 if (selectedItem != null)
                 {
-                    //GUI.skin = invSkin;
+                    GUI.skin = invSkin;
                     GUI.Box(new Rect(scr.x * 12f, scr.y * 0.25f, scr.x * 3, scr.y * 0.25f), selectedItem.Name);
                     GUI.Box(new Rect(scr.x * 12f, scr.y * 0.75f, scr.x * 3, scr.y * 3), selectedItem.Icon);
                     GUI.Box(new Rect(scr.x * 12f, scr.y * 4, scr.x * 3, scr.y * 2), selectedItem.Description);
-                    //GUI.skin = null;
+                    GUI.skin = null;
+                    UseItem();
                 }
             }
             else
@@ -217,9 +218,9 @@ namespace Linear
 
 
 
-        void UseItem(ItemType item)
+        void UseItem()
         {
-            switch (item)
+            switch (selectedItem.Type)
             {
                 case ItemType.Ingredient:
 
@@ -259,9 +260,21 @@ namespace Linear
                     break;
             }
 
-            if (GUI.Button(new Rect(0, 0, 1, 1), "Discard"))
+            if (GUI.Button(new Rect(scr.x * 12f, scr.y * 7, scr.x * 1, scr.y * 0.5f), "Discard"))
             {
+                for (int i = 0; i < equipmentSlots.Length; i++)
+                {
+                    if (equipmentSlots[i].curItem != null && selectedItem.Name == equipmentSlots[i].curItem.name)
+                    {
+                        Destroy(equipmentSlots[i].curItem);
+                    }
+                }
 
+                GameObject droppedItem = Instantiate(selectedItem.Mesh, dropLocation.position, Quaternion.identity);
+                droppedItem.name = selectedItem.Name;
+                Rigidbody itemRigidbody = droppedItem.AddComponent<Rigidbody>();
+                itemRigidbody.useGravity = true;
+                itemRigidbody.AddForce(dropLocation.forward * 3);
             }
         }
     }
