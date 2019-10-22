@@ -75,7 +75,7 @@ public static class ItemData
                 break;
             case 301:
                 name = "Meat";
-                description = "Hearty flesh cut out of an animal. It's not entirely clear what the animal was, but it looks delicious.";
+                description = "Hearty flesh cut out of an animal. It's not entirely clear what the original animal was, but it looks delicious.";
                 icon = "Meat";
                 mesh = "Cube";
                 break;
@@ -90,9 +90,11 @@ public static class ItemData
             #region Weapon
             case 500:
                 id = itemID;
+                type = ItemType.Weapon;
                 name = "Broadsword";
                 description = "A sturdy, reliable blade suitable for a wide variety of combat engagements. It's so ordinary and universal that I can't think of a funny joke to write here.";
                 icon = "Broadsword";
+                mesh = "Cube";
                 break;
             #endregion
             #region Craftable

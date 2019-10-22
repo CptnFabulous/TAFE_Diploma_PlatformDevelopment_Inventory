@@ -36,6 +36,14 @@ namespace Linear
         }
         public Equipment[] equipmentSlots;
         
+
+
+        Rect UIRect(float horizontal, float vertical, float width, float height)
+        {
+            return new Rect(horizontal * scr.x, vertical * scr.y, width * scr.x, height * scr.y);
+        }
+
+
         // Start is called before the first frame update
         void Start()
         {
@@ -168,7 +176,9 @@ namespace Linear
                 if (selectedItem != null)
                 {
                     GUI.skin = invSkin;
-                    GUI.Box(new Rect(scr.x * 12f, scr.y * 0.25f, scr.x * 3, scr.y * 0.25f), selectedItem.Name);
+                    //GUI.Box(new Rect(scr.x * 12f, scr.y * 0.25f, scr.x * 3, scr.y * 0.25f), selectedItem.Name);
+                    GUI.Box(UIRect(12, 0.25f, 3, 0.25f), selectedItem.Name);
+
                     GUI.Box(new Rect(scr.x * 12f, scr.y * 0.75f, scr.x * 3, scr.y * 3), selectedItem.Icon);
                     GUI.Box(new Rect(scr.x * 12f, scr.y * 4, scr.x * 3, scr.y * 2), selectedItem.Description);
                     GUI.skin = null;
@@ -184,6 +194,54 @@ namespace Linear
 
         void Display()
         {
+            if (!(sortType == "All" || sortType == ""))
+            {
+                ItemType type = (ItemType)System.Enum.Parse(typeof(ItemType), sortType);
+                int a = 0; // amount of that type
+                int s = 0; // slot position
+
+                for (int i = 0; i < inv.Count; i++)
+                {
+                    if (inv[i].Type == type)
+                    {
+                        a++;
+                    }
+                }
+                if (a <= slotsOnScreen)
+                {
+                    for (int i = 0; i < inv.Count; i++)
+                    {
+                        if (inv[i].Type == type)
+                        {
+                            if (GUI.Button(new Rect(0.5f * scr.x, 0.25f * scr.y + (0.25f * scr.y * i), 3 * scr.x, 0.25f * scr.y), inv[i].Name))
+                            {
+                                selectedItem = inv[i];
+                            }
+                            s++;
+                        }
+
+                        
+                    }
+                }
+                else
+                {
+                    scrollPos = GUI.BeginScrollView(new Rect(0, 0.25f * scr.y, 3.75f * scr.x, 8.5f * scr.y), scrollPos, new Rect(0, 0, 0, 8.5f * scr.y + ((inv.Count - 34) * (0.25f * scr.y))), false, true);
+                    for (int i = 0; i < inv.Count; i++)
+                    {
+                        if (inv[i].Type == type)
+                        {
+                            if (GUI.Button(new Rect(0.5f * scr.x, 0.25f * scr.y + (0.25f * scr.y * i), 3 * scr.x, 0.25f * scr.y), inv[i].Name))
+                            {
+                                selectedItem = inv[i];
+                            }
+                            s++;
+                        }
+                    }
+                    GUI.EndScrollView();
+                }
+            }
+
+
             if (inv.Count <= slotsOnScreen)
             {
                 for(int i = 0; i < inv.Count; i++)
@@ -238,7 +296,28 @@ namespace Linear
 
                     break;
                 case ItemType.Weapon:
+                    if (equipmentSlots[2].curItem == null || selectedItem.Name != equipmentSlots[2].curItem.name)
+                    {
+                        if (GUI.Button(new Rect(scr.x * 12f, scr.y * 7, scr.x * 1, scr.y * 0.5f), "Equip"))
+                        {
+                            if (equipmentSlots[2].curItem != null)
+                            {
+                                Destroy(equipmentSlots[2].curItem);
+                            }
+                            GameObject curItem = Instantiate(selectedItem.Mesh, equipmentSlots[2].location);
+                            equipmentSlots[2].curItem = curItem;
+                            curItem.name = selectedItem.Name;
+                        }
+                    }
+                    else
+                    {
+                        if (GUI.Button(new Rect(scr.x * 12f, scr.y * 7, scr.x * 1, scr.y * 0.5f), "Unequip"))
+                        {
+                            Destroy(equipmentSlots[2].curItem);
+                        }
+                    }
 
+                    
                     break;
                 case ItemType.Ammunition:
 
@@ -260,7 +339,7 @@ namespace Linear
                     break;
             }
 
-            if (GUI.Button(new Rect(scr.x * 12f, scr.y * 7, scr.x * 1, scr.y * 0.5f), "Discard"))
+            if (GUI.Button(new Rect(scr.x * 14f, scr.y * 7, scr.x * 1, scr.y * 0.5f), "Discard"))
             {
                 for (int i = 0; i < equipmentSlots.Length; i++)
                 {
