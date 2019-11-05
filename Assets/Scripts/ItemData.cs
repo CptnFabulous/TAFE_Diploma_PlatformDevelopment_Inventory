@@ -116,6 +116,7 @@ public static class ItemData
             default:
                 name = "Default Item";
                 description = "A placeholder item.";
+                icon = "BonusDuck";
 
                 break;
         }
