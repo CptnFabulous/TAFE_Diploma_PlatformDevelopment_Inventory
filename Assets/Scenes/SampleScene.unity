@@ -421,6 +421,7 @@ GameObject:
   - component: {fileID: 927598841}
   - component: {fileID: 927598846}
   - component: {fileID: 927598847}
+  - component: {fileID: 927598848}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -615,7 +616,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 927598840}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1a5893f1c850b942a1c7e8b7b673637, type: 3}
   m_Name: 
@@ -674,6 +675,47 @@ MonoBehaviour:
     width: 0
     height: 0
   scr: {x: 0, y: 0}
+--- !u!114 &927598848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927598840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172f0ac3b2ec9b249b99d0981a53e339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showSelectMenu: 0
+  toggleToggleable: 0
+  screenRatio: {x: 16, y: 9}
+  radialTexture: {fileID: 2800000, guid: d9ca232708bfa3145a04b6782c12864c, type: 3}
+  slotTexture: {fileID: 2800000, guid: 171225c90e1a76a4a904583766e2f4d0, type: 3}
+  circleScaleOffset: 0
+  iconSize: {x: 0, y: 0}
+  showIcons: 1
+  showBoxes: 1
+  showBounds: 1
+  iconSizeNum: 1
+  radialRotation: 0
+  iconOffset: 0
+  mouse: {x: 0, y: 0}
+  input: {x: 0, y: 0}
+  inputDist: 0
+  inputAngle: 0
+  keyIndex: 0
+  mouseIndex: 0
+  inputIndex: 0
+  slotPos: []
+  boundPos: []
+  numOfSectors: 7
+  circleRadius: 200
+  mouseDistance: 0
+  sectorDegree: 0
+  mouseAngles: 0
+  sectorIndex: 0
+  withinCircle: 0
 --- !u!1 &1203763481
 GameObject:
   m_ObjectHideFlags: 0
